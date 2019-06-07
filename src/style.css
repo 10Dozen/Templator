@@ -1,0 +1,39 @@
+body {
+	background-color: #ccc;
+	font-size: 14px;
+	font-family: serif;
+}
+body > div {
+	padding: 10px;
+}
+
+.col-2 {
+	display: inline-block;
+	width: 128px;
+}
+
+.input-panel > .col-2 > input, button {
+	width: 120px;
+	margin-right: 10px;
+	margin-left: 10px;
+	padding: 0px;
+	text-align: left;
+}
+
+#central-panel {
+	padding: 0px;
+}
+
+#bottom-panel {
+	font-family: monospace;
+}
+
+.output-panel {
+	background-color: antiquewhite;
+	min-height: 16px;
+	border-radius: 10px;
+	padding: 12px;
+	font-family: monospace;
+	white-space: pre-wrap;
+	font-size: 12px;
+}

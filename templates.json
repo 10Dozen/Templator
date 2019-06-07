@@ -1,0 +1,20 @@
+Templates = [
+	{
+		"name": "CUP Stringtable"
+		,"body": "&lt;Key ID=\"STR_CUP_%1\"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Original&gt;%2&lt;/Original&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Russian&gt;%3&lt;/Russian&gt;<br>&lt;/Key&gt;"
+		,"inputs": {
+			"1": {"name":"Key","tooltip":"Key part of Stringtable node"},
+			"2": {"name":"Original","tooltip":"Value for Original"},
+			"3": {"name":"Russian","tooltip":"Value for Russian"}
+		}
+	}
+	,{
+		"name": "Template A2"
+		,"body": "&lt;Key ID=\"STR_%1\"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Original&gt;%2&lt;/Original&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Russian&gt;%3&lt;/Russian&gt;<br>&lt;/Key&gt;"
+		,"inputs": {
+			"1": {"name":"Key","tooltip":"Key part of Stringtable node"},
+			"2": {"name":"Original","tooltip":"Value for Original"},
+			"3": {"name":"Russian","tooltip":"Value for Russian"}
+		}
+	}
+];

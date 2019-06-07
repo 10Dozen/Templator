@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>dzn Templator</title>
+		
+		<link rel="stylesheet" href="src/style.css">
+		<script src="src/jquery-3.3.1.min.js"></script>
+		<script src="templates.json"></script>
+		<script src="src/app.js"></script>
+
+	</head>
+	<body>
+		<div id="top-panel">
+			<!-- Template selector -->
+			Template:
+			<select id="template-selector">
+				<option>Template 1</option>
+				<option>Template 2</option>
+			</select>
+			<!-- <button>Edit template</button> -->
+		</div>
+		<div id="central-panel">
+			<!-- Inputs grid here -->
+			<div class="input-panel">
+				<div class="col-2"><span>Input 1</span></div>
+				<div class="col-2"><input ></input></div>
+				<div class="col-2"><input ></input></div>
+			</div>
+			<div class="input-panel">
+					<div class="col-2"><span>Input 1</span></div>
+				<div class="col-2"><input ></input></div>
+				<div class="col-2"><input ></input></div>
+			</div>
+		</div>
+		<hr />
+		<div id="bottom-panel">
+			<!-- Result items here -->
+			<div class="output-title"><span>Result 1:</span><div class="output-panel">Some template result</div></div>
+			<div class="output-title"><span>Result 2:</span><div class="output-panel">Some template result</div></div>
+		</div>
+		
+
+	</body>
+</html>
+
