@@ -9,12 +9,75 @@ Templates = [
 		}
 	}
 	,{
-		"name": "Template A2"
-		,"body": "&lt;Key ID=\"STR_%1\"&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Original&gt;%2&lt;/Original&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Russian&gt;%3&lt;/Russian&gt;<br>&lt;/Key&gt;"
+		"name": "CUP-CBA Scripted optics PIP list"
+		,"body": "CUP_optic_%1 = \"CUP_optic_%1_PIP\";<br/><br/>CUP_optic_%1 = 1;<br/>CUP_optic_%1_PIP = 1;<br/>CUP_optic_%1_3D = 1;"
 		,"inputs": {
-			"1": {"name":"Key","tooltip":"Key part of Stringtable node"},
-			"2": {"name":"Original","tooltip":"Value for Original"},
-			"3": {"name":"Russian","tooltip":"Value for Russian"}
+			"1": {"name":"class","tooltip":"classname"},
 		}
+	}
+	, {
+		"name": "CUP-CBA Scripted optics PIP config"
+		,"body": "	weaponInfoType = \"CBA_ScriptedOptic\";<br/>	class CBA_ScriptedOptic<br/>  	{<br/> 		reticleTexture = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%1\\data\\%2_reticle_ca.paa\";<br/> 		reticleTextureNight = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%1\\data\\%2_reticle_n_ca.paa\";<br/> 		reticleTextureSize  = 1;<br/>		bodyTexture = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%1\\data\\body\\%2_body_ca.paa\";<br/> 		bodyTextureNight = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%1\\data\\body\\%2_body_night_ca.paa\";<br/> 		bodyTextureSize = 1.95;<br/> 	};"
+		, "inputs": {
+			"1": {"name": "folder name"},
+			"2": {"name": "image headline"}
+		}
+	}
+	, {
+		"name": "CUP Optics child class"
+		,"body": "class CUP_optic_%1: CUP_optic_%2<br/>{<br/>	author = \"$STR_CUP_AUTHOR_STRING\";<br/>	CUP_WEAPONS_DLC<br/> 	scope = 2;<br/> 	displayName = $STR_CUP_dn_optic_%1;<br/> 	picture = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%3\\data\\ui\\gear_acco_%4_ca.paa\";<br/> 	model = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%3\\%5.p3d\";<br/> 	class CBA_ScriptedOptic: CBA_ScriptedOptic<br/> 	{<br/> 		bodyTexture = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%3\\data\\body\\%6_ca.paa\";<br/> 	};<br/> 	MRT_SWITCH_2D(\"CUP_optic_%1_3D\")<br/>};<br/>class CUP_optic_%1_PIP: CUP_optic_%1<br/>{<br/> 	CBA_PIP_BIG<br/> 	MRT_SWITCH_2D(\"CUP_optic_%1_3D\")<br/>};<br/>class CUP_optic_%1_3D: CUP_optic_%2_3D<br/>{<br/> 	author = \"$STR_CUP_AUTHOR_STRING\";<br/> 	CUP_WEAPONS_DLC<br/>  	scope = 1;<br/>  	displayName = $STR_CUP_dn_optic_%1;<br/>  	picture = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%3\\data\\ui\\gear_acco_%4_ca.paa\";<br/> 	model = \"\\CUP\\Weapons\\CUP_Weapons_West_Attachments\\%3\\%5.p3d\";<br/> 	MRT_SWITCH_3D(\"CUP_optic_%1\")<br/>};"
+		, "inputs": {
+			"1": {"name": "Class"},
+			"2": {"name": "Parent Class"},
+			"3": {"name": "Folder"},
+			"4": {"name": "gear_acco_ (Icon name) _ca.paa"},
+			"5": {"name": "(Model name) .p3d"},
+			"6": {"name": "(Body pciture name) _ca.paa"},
+			"7": {"name": "Switch to class name"}
+		}
+	}	
+	
+	, {
+		"name": "MMC Preset Line (Basic)"
+		,"body": ",[\"%1 %2\", \"_%2\", [], [], []]"
+	
+	
+		,"inputs": {
+			"1": {"name": "Preset header"},
+			"2": {"name": "Variant name"}
+		}	
+	}
+	, {
+		"name": "MMC Preset Line (Camo)"
+		,"body": ",[\"%1 %2\", \"_%2\", [], [], [[\"%3\",\".\\data\\%4\"]]]"
+		,"inputs": {
+			"1": {"name": "Preset header"},
+			"2": {"name": "Variant name"},
+			"3": {"name": "Camo selection"},
+			"4": {"name": "Texture name"}
+		}	
+	}
+	, {
+		"name": "MMC Preset Line (1 Option & Camo)"
+		,"body": ",[\"%1 %2\", \"_%2\", [%3], [], [[\"%4\",\".\\data\\%5\"]]]"
+		,"inputs": {
+			"1": {"name": "Preset header"},
+			"2": {"name": "Variant name"},
+			"3": {"name": "Option 1" },
+			"4": {"name": "Camo selection"},
+			"5": {"name": "Texture name"}
+		}	
+	}
+	, {
+		"name": "MMC Preset Line (2 Options & 2 Camo)"
+		,"body": ",[\"%1 %2\", \"_%2\", [\"%3\",\"%4\"], [], [[\"Camo1\",\".\\data\\%5\",\"\"],[\"Camo2\",\".\\data\\%6\",\"\"]]]"
+		,"inputs": {
+			"1": {"name": "Preset header"},
+			"2": {"name": "Variant name"},
+			"3": {"name": "Option 1" },
+			"4": {"name": "Option 2" },
+			"5": {"name": "Camo 1 tex"},
+			"6": {"name": "Camo 2 tex"}
+		}	
 	}
 ];

@@ -170,7 +170,7 @@ window.Templator = {
 			let combo = this.activeCombinations[i];
 			let text = "" + (this.activeTemplate.body);
 			for (let j = 0; j < combo.length; ++j) {
-				text = text.replace("%" + (j + 1), combo[j]);
+				text = text.replace(new RegExp("%" + (j + 1), "gi"), combo[j]);
 			}
 
 			let panelText = (this.elements.output_panel).replace("%1", i+1).replace("%2", text);
