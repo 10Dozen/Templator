@@ -5,6 +5,7 @@ window.Templator = {
 	, activeTemplateName: ""
 	, activeTemplate: {}
 	, activeCombinations: []
+	, combineAll: true
 	, elements: {
 		"input": "<div class=\"col-2\"><input></input></div>"
 		,"output_panel": "<div class=\"output-title\"><span>Result %1:</span><div class=\"output-panel\">%2</div></div>"
@@ -86,6 +87,10 @@ window.Templator = {
 
 		this.setIputsEvents(type);
 	}
+	, switchCombineMode: function (combineAll) {
+		this.combineAll = combineAll;
+		this.updateOutputText();
+	}
 
 	, setIputsEvents: function (type) {		
 		this.removeInputEvents(type);
@@ -135,13 +140,33 @@ window.Templator = {
 			}
 		}
 	}
+	, combineInputValuesByColumn: function (arrValues, combinations) {
+		let maxSize = 0;
+		for (let i=0; i<arrValues.length; ++i) {
+			maxSize = Math.max(maxSize, arrValues[i].length);
+		}
+
+		for (let i=0; i < maxSize; ++i) {
+			let columnCombo = [];
+
+			for (let j=0; j < arrValues.length; ++j) {
+				let row = arrValues[j];
+				columnCombo.push( row[Math.min(row.length - 1, i)] ); // Add current column value or last available for row
+			}
+			combinations.push(columnCombo);
+		}
+
+		return;
+	}
 	, updateOutputText: function () {
 		let $out = $("#bottom-panel");
 		$out.html("");
 
 		let arrValues = [];
+		this.activeCombinations = [];
 		let inputGroups = $("#central-panel > div");
 
+		// Collect all inputs value in 2d array (rows x columns)
 		for (let i = 0; i < inputGroups.length; ++i) {
 			let inputs = $(inputGroups[i]).find("div > input");
 			let inputValues = [];
@@ -155,8 +180,13 @@ window.Templator = {
 			arrValues.push(inputValues);
 		}
 
-		this.activeCombinations = [];
-		this.combineInputValues(arrValues, 0, [], this.activeCombinations);
+		if (this.combineAll) {
+			// Combine all with all			
+			this.combineInputValues(arrValues, 0, [], this.activeCombinations);
+		} else {
+			// Combine within columns
+			this.combineInputValuesByColumn(arrValues, this.activeCombinations)
+		}
 
 		let $panel = $("#bottom-panel");
 		if (this.activeCombinations.length == 0) {
@@ -182,6 +212,10 @@ window.Templator = {
 			let selected = $(this).val();
 			Templator.setActiveTemplate(selected);
 		});
+		$("#combine-mode-chbx").on("change", function () {
+			let selected = $(this).prop('checked');
+			Templator.switchCombineMode(!selected);
+		})
 	}
 	, init: function () {
 		this.initEvents();
