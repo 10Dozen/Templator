@@ -37,3 +37,8 @@ body > div {
 	white-space: pre-wrap;
 	font-size: 12px;
 }
+
+textarea {
+	width: 512px;
+	min-height: 128px;
+}

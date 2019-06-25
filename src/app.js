@@ -6,9 +6,12 @@ window.Templator = {
 	, activeTemplate: {}
 	, activeCombinations: []
 	, combineAll: true
+	, editorOpened: false
+	, $editorTextarea: null
 	, elements: {
 		"input": "<div class=\"col-2\"><input></input></div>"
 		,"output_panel": "<div class=\"output-title\"><span>Result %1:</span><div class=\"output-panel\">%2</div></div>"
+		,"editor": "<br /><textarea class='editor-area' /><hr/><textarea disabled='1' class='disabled-editor-area'>...</textarea><hr/>"
 	}
 	
 	, getTemplateByName: function (name) {
@@ -31,6 +34,10 @@ window.Templator = {
 	}
 	, setActiveTemplate: function (name) {
 		this.activeTemplateName = name;
+
+		if (this.editorOpened) {
+			this.toggleEditor(); // Close editor on swithing
+		}
 
 		this.activeTemplate = this.getTemplateByName(name);
 		this.initFormByTemplate();
@@ -207,6 +214,42 @@ window.Templator = {
 			$panel.append(panelText);
 		}
 	}
+
+	// Editor
+	, unEscapeTags: function (text) {
+		return text.replace(/<br>/g, "\r\n").replace(/<br\/>/g, "\r\n").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/(&nbsp;){4}/g, "	")
+	}
+	, escapeTags: function (text) {
+		return text.replace(/	/g,"&nbsp;&nbsp;&nbsp;&nbsp;").replace(/>/g,"&gt;").replace(/</g,"&lt;").replace(/(?:\r\n|\r|\n)/g, "<br>")
+	}
+	, toggleEditor: function () {
+		this.editorOpened = !this.editorOpened;
+
+		if (this.editorOpened) { 
+			$("#editor-pane").append(this.elements.editor);
+			this.$editorTextarea = $(".editor-area");
+			
+			$(".disabled-editor-area").val(this.activeTemplate.body);
+			this.$editorTextarea.val(this.unEscapeTags(this.activeTemplate.body));
+
+			this.$editorTextarea.on("change", function () {
+				Templator.editTemplateText();
+			})
+
+		} else {
+			this.$editorTextarea.off("change");
+			$("#editor-pane").html("");
+		}
+	}
+	, editTemplateText: function () {
+		let newBody = this.escapeTags(this.$editorTextarea.val());
+
+		this.activeTemplate.body = newBody;		
+		$(".disabled-editor-area").val(newBody);
+
+		this.updateOutputText();
+	}
+
 	, initEvents: function () {
 		$("#template-selector").on("change", function () {
 			let selected = $(this).val();
@@ -215,7 +258,10 @@ window.Templator = {
 		$("#combine-mode-chbx").on("change", function () {
 			let selected = $(this).prop('checked');
 			Templator.switchCombineMode(!selected);
-		})
+		});
+		$("#editor-btn").on("click", function () {
+			Templator.toggleEditor();
+		});
 	}
 	, init: function () {
 		this.initEvents();
